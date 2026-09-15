@@ -1,0 +1,136 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+ body{margin:0;background:#fff;font-family:"Malgun Gothic","Segoe UI",sans-serif}
+ svg{display:block}
+ .b{font-weight:700}
+ .mono{font-family:Consolas,"Malgun Gothic",monospace}
+ .lbl{font-size:12px;fill:#1e293b}
+ .sub{font-size:11px;fill:#64748b}
+</style></head><body>
+<svg width="1240" height="660" viewBox="0 0 1240 660" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <marker id="m" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
+  <marker id="mb" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/></marker>
+  <marker id="mg" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0f766e"/></marker>
+  <marker id="mr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/></marker>
+ </defs>
+
+ <text x="30" y="34" class="b" font-size="15" fill="#1e293b">세션 — "방"을 만들고, 코드로 들어오고, 방장이 닫는다. NetworkManager(NGO)는 우리가 켜고 끄지 않는다 — SDK가 방과 함께 켜고 끈다</text>
+
+ <!-- ================= ① 방 만들기 ================= -->
+ <rect x="30" y="52" width="1180" height="150" rx="12" fill="#f4f8ff" stroke="#a9c0ea" stroke-width="1.5"/>
+ <text x="46" y="74" class="b" font-size="13" fill="#1e3a8a">① 방 만들기 — 호스트 A</text>
+
+ <rect x="46" y="88" width="130" height="44" rx="22" fill="#e8f0fe" stroke="#a9c0ea" stroke-width="1.5"/>
+ <text x="111" y="107" text-anchor="middle" class="lbl b" fill="#1e3a8a">[방 만들기]</text>
+ <text x="111" y="123" text-anchor="middle" class="sub mono">CreateSessionAsync</text>
+ <line x1="176" y1="110" x2="208" y2="110" stroke="#334155" stroke-width="1.5" marker-end="url(#m)"/>
+
+ <!-- SDK does three things -->
+ <rect x="212" y="82" width="560" height="110" rx="10" fill="#fff" stroke="#a9c0ea" stroke-width="1.5"/>
+ <text x="226" y="102" class="lbl b">SDK가 한 번에 셋을 한다</text>
+ <text x="400" y="102" class="sub mono">CreateSessionAsync(options.WithRelayNetwork())</text>
+ <g font-size="12">
+  <rect x="226" y="112" width="170" height="66" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="311" y="130" text-anchor="middle" class="lbl b">명부 (Lobby)</text>
+  <text x="311" y="147" text-anchor="middle" class="sub">방 등록 · 코드 발급</text>
+  <text x="311" y="163" text-anchor="middle" class="mono b" fill="#1e3a8a">"K7Q2A"</text>
+  <rect x="406" y="112" width="170" height="66" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="491" y="130" text-anchor="middle" class="lbl b">중계 서버 (Relay)</text>
+  <text x="491" y="147" text-anchor="middle" class="sub">자리 배정 — 공유기 뒤에서도</text>
+  <text x="491" y="163" text-anchor="middle" class="sub">서로 붙을 수 있게</text>
+  <rect x="586" y="112" width="170" height="66" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="671" y="130" text-anchor="middle" class="lbl b">NGO 호스트 시작</text>
+  <text x="671" y="147" text-anchor="middle" class="sub mono">NetworkManager.StartHost</text>
+  <text x="671" y="163" text-anchor="middle" class="sub">우리 코드가 안 부른다</text>
+ </g>
+ <line x1="772" y1="137" x2="804" y2="137" stroke="#334155" stroke-width="1.5" marker-end="url(#m)"/>
+
+ <rect x="808" y="88" width="180" height="96" rx="10" fill="#fff" stroke="#a9c0ea" stroke-width="1.5"/>
+ <text x="898" y="108" text-anchor="middle" class="lbl b">방에 메모를 붙인다</text>
+ <text x="898" y="128" text-anchor="middle" class="mono" font-size="12" fill="#1e3a8a">ver = "12"</text>
+ <text x="898" y="146" text-anchor="middle" class="sub">내 게임 버전 — 들어오는</text>
+ <text x="898" y="161" text-anchor="middle" class="sub">사람이 읽고 비교한다</text>
+ <line x1="988" y1="137" x2="1020" y2="137" stroke="#0f766e" stroke-width="1.5" marker-end="url(#mg)"/>
+
+ <rect x="1024" y="98" width="170" height="76" rx="10" fill="#ecfdf5" stroke="#0f766e" stroke-width="1.5"/>
+ <text x="1109" y="118" text-anchor="middle" class="b mono" font-size="12" fill="#065f46">OnSessionJoined</text>
+ <text x="1109" y="138" text-anchor="middle" class="sub">→ 음성 채널 입장</text>
+ <text x="1109" y="154" text-anchor="middle" class="sub">→ 로비 씬으로 (전원 따라옴)</text>
+
+ <!-- ================= ② 참가 ================= -->
+ <rect x="30" y="214" width="1180" height="228" rx="12" fill="#fff" stroke="#1d4ed8" stroke-width="2"/>
+ <text x="46" y="236" class="b" font-size="13" fill="#1d4ed8">② 참가 — 클라이언트 B</text>
+ <text x="220" y="236" class="sub">버전이 다른 빌드가 같은 방에 들어오면 RPC가 안 맞아 깨진다 → 두 번 검사한다</text>
+
+ <rect x="46" y="250" width="130" height="44" rx="22" fill="#f3e8ff" stroke="#c4b5fd" stroke-width="1.5"/>
+ <text x="111" y="269" text-anchor="middle" class="lbl b" fill="#5b21b6">[코드로 참가]</text>
+ <text x="111" y="285" text-anchor="middle" class="sub mono">"K7Q2A" 입력</text>
+ <line x1="176" y1="272" x2="208" y2="272" stroke="#334155" stroke-width="1.5" marker-end="url(#m)"/>
+
+ <rect x="212" y="250" width="250" height="44" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+ <text x="337" y="268" text-anchor="middle" class="lbl b">SDK: 명부에서 방 찾기 → 중계 접속</text>
+ <text x="337" y="285" text-anchor="middle" class="sub mono">JoinSessionByCodeAsync → StartClient</text>
+ <line x1="462" y1="272" x2="494" y2="272" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#mb)"/>
+
+ <!-- check 1: host -->
+ <rect x="498" y="250" width="330" height="88" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+ <text x="512" y="270" class="lbl b" fill="#1d4ed8">검사 1 — 호스트 A가 문 앞에서</text>
+ <text x="512" y="288" class="lbl">B의 연결 요청에 실린 <tspan class="mono">ver</tspan>를 본다</text>
+ <text x="512" y="306" class="sub">같으면 → 들여보내고 플레이어 스폰</text>
+ <text x="512" y="322" class="sub">다르면 → 거부 + 사유 돌려줌</text>
+ <text x="814" y="330" text-anchor="end" class="sub mono">ConnectionApprovalGate</text>
+ <line x1="828" y1="272" x2="860" y2="272" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#mb)"/>
+
+ <!-- check 2: client -->
+ <rect x="864" y="250" width="330" height="88" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+ <text x="878" y="270" class="lbl b" fill="#1d4ed8">검사 2 — B가 방 메모를 읽고</text>
+ <text x="878" y="288" class="lbl">방에 붙은 <tspan class="mono">ver</tspan>와 내 버전을 비교한다</text>
+ <text x="878" y="306" class="sub">같으면 → OnSessionJoined → 음성 · 로비 씬</text>
+ <text x="878" y="322" class="sub">다르면 → 즉시 나가고 "버전이 달라요" 표시</text>
+
+ <!-- why two -->
+ <rect x="46" y="350" width="1148" height="80" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+ <text x="60" y="372" class="lbl b">왜 두 번인가</text>
+ <text x="60" y="392" class="lbl">검사 1(호스트)이 확실하지만, 거부 사유가 돌아올 즈음엔 B의 화면이 이미 씬 전환 중일 수 있어 문구를 띄울 UI가 사라져 있다.</text>
+ <text x="60" y="410" class="lbl">그래서 B가 <tspan class="b">방 메모를 먼저 읽고 스스로 물러나면서</tspan> 사유를 보여 준다. 검사 1은 메모를 못 읽는 경우의 최후 방어선.</text>
+ <text x="60" y="426" class="sub">SessionProperties의 ver (A층) · NGO ConnectionApproval 페이로드의 ver (B층) — 둘 다 같은 NetworkProtocol.VersionString</text>
+
+ <!-- ================= ③ 닫기 ================= -->
+ <rect x="30" y="454" width="1180" height="192" rx="12" fill="#fff5f5" stroke="#fca5a5" stroke-width="1.5"/>
+ <text x="46" y="476" class="b" font-size="13" fill="#b91c1c">③ 닫기 — 누가 나가느냐에 따라 다르다</text>
+ <text x="300" y="476" class="sub">연결을 끊는 모든 경로는 SessionManager.LeaveAsync 하나를 통과한다 — 그래야 음성·NGO·세션이 같은 순서로 정리된다</text>
+
+ <g font-size="12">
+  <!-- host leaves -->
+  <rect x="46" y="490" width="370" height="144" rx="10" fill="#fff" stroke="#fca5a5" stroke-width="1.5"/>
+  <text x="60" y="510" class="lbl b" fill="#991b1b">방장 A가 [메인으로]</text>
+  <text x="60" y="530" class="lbl">① 음성 로그아웃</text>
+  <text x="60" y="548" class="lbl">② <tspan class="mono">LeaveAsync</tspan> — 방장이라 <tspan class="b">방이 통째로 삭제</tspan></text>
+  <text x="60" y="566" class="lbl">③ SDK가 NGO 끔 → 끝날 때까지 기다림</text>
+  <text x="60" y="584" class="lbl">④ 타이틀 (로그인은 유지 — 바로 새 방 가능)</text>
+  <text x="60" y="608" class="sub">B·C는 "방 삭제됨" 신호를 받아 아래 오른쪽 경로로</text>
+  <text x="60" y="624" class="sub mono">SessionFlow.LeaveToMainAsync</text>
+
+  <!-- client leaves -->
+  <rect x="432" y="490" width="370" height="144" rx="10" fill="#fff" stroke="#fca5a5" stroke-width="1.5"/>
+  <text x="446" y="510" class="lbl b" fill="#991b1b">클라 B가 [메인으로]</text>
+  <text x="446" y="530" class="lbl">같은 네 단계 — 단, <tspan class="b">본인만 빠진다</tspan></text>
+  <text x="446" y="548" class="lbl">방은 그대로, A·C는 계속 플레이</text>
+  <text x="446" y="574" class="lbl b">클라 B가 Alt+F4 · 프로세스 강제 종료</text>
+  <text x="446" y="592" class="lbl">B는 정리 코드를 한 줄도 못 돌린다</text>
+  <text x="446" y="610" class="lbl">→ <tspan class="b">호스트 A가 대신</tspan> 명부에서 B를 내린다</text>
+  <text x="446" y="626" class="sub">안 그러면 유령 멤버가 정원을 먹고 B는 재입장 불가 (#920)</text>
+
+  <!-- involuntary -->
+  <rect x="818" y="490" width="376" height="144" rx="10" fill="#fef2f2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="832" y="510" class="lbl b" fill="#991b1b">방이 죽었다 — 비자발 (B·C 입장)</text>
+  <text x="832" y="530" class="lbl">신호가 두 갈래로 온다:</text>
+  <text x="832" y="548" class="sub mono">ISession.Deleted (방 삭제) · NGO 연결 끊김 (드롭)</text>
+  <text x="832" y="570" class="lbl">둘 다 <tspan class="mono b">HandleConnectionLost</tspan> 한 곳으로 모아</text>
+  <text x="832" y="588" class="lbl"><tspan class="mono">OnConnectionLost(사유)</tspan> 하나로 바꿔 쏜다</text>
+  <text x="832" y="608" class="lbl">→ 어느 씬에 있든 타이틀로 복귀 · 음성 채널 이탈</text>
+  <text x="832" y="626" class="sub">자기가 나가는 중(②)엔 이 신호를 무시 — 두 번 처리 안 되게</text>
+ </g>
+</svg>
+</body></html>

@@ -1,0 +1,113 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+ body{margin:0;background:#fff;font-family:"Malgun Gothic","Segoe UI",sans-serif}
+ svg{display:block}
+ .b{font-weight:700}
+ .mono{font-family:Consolas,"Malgun Gothic",monospace}
+ .muted{fill:#64748b;font-size:12px}
+</style></head><body>
+<svg width="1240" height="560" viewBox="0 0 1240 560" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker>
+  <marker id="ap" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/></marker>
+  <marker id="ag" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0f766e"/></marker>
+ </defs>
+
+ <!-- ===== left: 수명 (세션 이벤트 → 로그인 → 채널) ===== -->
+ <rect x="30" y="20" width="400" height="520" rx="14" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.5"/>
+ <text x="50" y="50" class="b" font-size="16" fill="#5b21b6">VivoxManager</text>
+ <text x="170" y="50" class="muted">수명 — 세션 이벤트만 보고 움직인다</text>
+
+ <g font-size="13">
+  <rect x="50" y="70" width="360" height="40" rx="10" fill="#e8f0fe" stroke="#a9c0ea"/>
+  <text x="65" y="94" class="mono" fill="#1e3a8a">Session.OnSessionJoined(sessionId)</text>
+
+  <line x1="230" y1="110" x2="230" y2="124" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="50" y="126" width="360" height="56" rx="10" fill="#fff" stroke="#c4b5fd"/>
+  <text x="65" y="147" class="b" fill="#5b21b6">① 로그인</text>
+  <text x="65" y="166" class="mono" font-size="12" fill="#334155">InitializeAsync → LoginAsync(DisplayName = PlayerId)</text>
+
+  <line x1="230" y1="182" x2="230" y2="196" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="50" y="198" width="360" height="118" rx="10" fill="#fff" stroke="#7c3aed" stroke-width="2"/>
+  <text x="65" y="219" class="b" fill="#5b21b6">② 채널 2개 동시 참가</text>
+  <text x="245" y="219" class="muted" font-size="11">이름 = 접두사 + 세션 Id</text>
+  <rect x="65" y="230" width="330" height="34" rx="8" fill="#f3e8ff" stroke="#c4b5fd"/>
+  <text x="77" y="245" class="b" font-size="12" fill="#5b21b6">Radio — JoinGroupChannelAsync</text>
+  <text x="77" y="259" class="muted" font-size="11">거리 무관 무전 · 본부 ↔ 현장</text>
+  <rect x="65" y="270" width="330" height="38" rx="8" fill="#f3e8ff" stroke="#c4b5fd"/>
+  <text x="77" y="285" class="b" font-size="12" fill="#5b21b6">Proximity — JoinPositionalChannelAsync (3D)</text>
+  <text x="77" y="300" class="muted" font-size="11">audible 15m · conversational 3m · InverseByDistance 감쇠</text>
+
+  <line x1="230" y1="316" x2="230" y2="330" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="50" y="332" width="360" height="40" rx="10" fill="#ecfdf5" stroke="#6ee7b7"/>
+  <text x="65" y="349" class="b" font-size="12" fill="#065f46">③ 기본 송신 = Proximity만 (Single) → Connected</text>
+  <text x="65" y="365" class="muted" font-size="11">수신은 두 채널 다 열려 있다 — 송신만 고른다</text>
+
+  <line x1="230" y1="372" x2="230" y2="386" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="50" y="388" width="360" height="56" rx="10" fill="#e8f0fe" stroke="#a9c0ea"/>
+  <text x="65" y="408" class="mono" font-size="12" fill="#1e3a8a">OnSessionLeft → 채널 이탈</text>
+  <text x="65" y="426" class="mono" font-size="12" fill="#1e3a8a">OnConnectionLost → 채널 이탈 + 로그아웃</text>
+  <text x="65" y="440" class="muted" font-size="11">Vivox는 NGO와 별개 서버 — 안 나가면 세션 뒤에도 들린다</text>
+ </g>
+
+ <text x="50" y="472" class="muted" font-size="11">· ParticipantSpeechDetected → OnSpeakingChanged(playerId)</text>
+ <text x="50" y="488" class="muted" font-size="11">  → 로비 명부 · 머리 위 이름표가 "말하는 중" 표시 (PlayerId로 매칭)</text>
+ <text x="50" y="510" class="muted" font-size="11">· 부품(입력 · 위치 보고)은 Vivox 수명을 모른다 — 매니저가</text>
+ <text x="50" y="526" class="muted" font-size="11">  NotifyLoggedIn / NotifyChannelsJoined / NotifyChannelsLeft로 통보</text>
+
+ <!-- ===== right top: 송신 모드 전환 ===== -->
+ <rect x="460" y="20" width="750" height="300" rx="14" fill="#fff" stroke="#7c3aed" stroke-width="2"/>
+ <text x="480" y="50" class="b" font-size="16" fill="#5b21b6">무전 / 육성 구분 = 송신 모드 전환</text>
+ <text x="780" y="50" class="muted">VoiceInputRouter · 채널을 갈아타지 않는다</text>
+
+ <!-- state: idle -->
+ <rect x="490" y="76" width="300" height="100" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+ <text x="505" y="100" class="b" font-size="14" fill="#1e293b">평소 — 오픈마이크</text>
+ <text x="505" y="122" class="mono" font-size="12" fill="#334155">TransmissionMode.Single(Proximity)</text>
+ <text x="505" y="144" font-size="12" fill="#334155">송신: 근접 채널만</text>
+ <text x="505" y="162" class="muted" font-size="11">가까운 사람에게만 들린다 · 거리 감쇠</text>
+
+ <!-- state: ptt -->
+ <rect x="880" y="76" width="300" height="100" rx="12" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+ <text x="895" y="100" class="b" font-size="14" fill="#5b21b6">PTT 누름 — 무전</text>
+ <text x="895" y="122" class="mono" font-size="12" fill="#334155">TransmissionMode.All</text>
+ <text x="895" y="144" font-size="12" fill="#334155">송신: 무전 + 근접 둘 다</text>
+ <text x="895" y="162" class="muted" font-size="11">본부·현장 전원에게 들린다 · 거리 무관</text>
+
+ <!-- arrows between states -->
+ <path d="M 790 110 L 875 110" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#ap)"/>
+ <text x="832" y="102" text-anchor="middle" class="b" font-size="11" fill="#7c3aed">키 누름</text>
+ <path d="M 880 145 L 795 145" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+ <text x="838" y="160" text-anchor="middle" class="b" font-size="11" fill="#475569">키 뗌</text>
+
+ <text x="490" y="206" class="mono" font-size="12" fill="#334155">SetChannelTransmissionModeAsync(on ? All : Single, on ? null : proximityChannel)</text>
+ <text x="490" y="224" class="muted" font-size="11">한 줄로 끝난다 — 두 채널에 이미 들어가 있으므로 "어디로 보낼지"만 바꾼다</text>
+
+ <line x1="490" y1="240" x2="1180" y2="240" stroke="#e2e8f0"/>
+ <text x="490" y="262" class="b" font-size="12" fill="#1e293b">마이크 음소거는 독립된 축</text>
+ <text x="490" y="280" class="muted" font-size="11">MuteInputDevice — 입력 장치를 끄므로 송신 모드와 무관하게 아무 채널에도 안 나간다.</text>
+ <text x="490" y="296" class="muted" font-size="11">음소거 중 PTT를 누르면 막지 않고 "마이크가 꺼져 있습니다" 안내만 띄운다 (#430)</text>
+
+ <!-- ===== right bottom: 근접 위치 보고 ===== -->
+ <rect x="460" y="340" width="750" height="200" rx="14" fill="#f4f8ff" stroke="#a9c0ea" stroke-width="1.5"/>
+ <text x="480" y="370" class="b" font-size="16" fill="#1e3a8a">근접 거리 감쇠</text>
+ <text x="620" y="370" class="muted">ProximityPositionReporter · 계산은 Vivox가, 우리는 좌표만 올린다</text>
+
+ <g font-size="12">
+  <rect x="490" y="392" width="200" height="60" rx="10" fill="#fff" stroke="#a9c0ea"/>
+  <text x="502" y="414" class="b" fill="#1e3a8a">로컬 플레이어 위치</text>
+  <text x="502" y="434" class="muted" font-size="11">0.1초마다 · 움직였을 때만</text>
+  <line x1="692" y1="422" x2="722" y2="422" stroke="#0f766e" stroke-width="1.5" marker-end="url(#ag)"/>
+  <rect x="725" y="392" width="230" height="60" rx="10" fill="#fff" stroke="#a9c0ea"/>
+  <text x="737" y="414" class="mono" fill="#334155">Set3DPosition(player,</text>
+  <text x="737" y="432" class="mono" fill="#334155">   proximityChannel)</text>
+  <line x1="957" y1="422" x2="987" y2="422" stroke="#0f766e" stroke-width="1.5" marker-end="url(#ag)"/>
+  <rect x="990" y="392" width="190" height="60" rx="10" fill="#ecfdf5" stroke="#6ee7b7"/>
+  <text x="1002" y="414" class="b" fill="#065f46">Vivox 서버</text>
+  <text x="1002" y="434" class="muted" font-size="11">거리별 음량 계산 → 각자에게</text>
+ </g>
+ <text x="490" y="482" class="muted" font-size="11">· 본부/현장 채널을 나누지 않는다 — 역할이 아니라 장소이므로 전원이 거리 기반 (GDD 4-4, #100)</text>
+ <text x="490" y="500" class="muted" font-size="11">· 가까우면 육성, 멀면 무전 — 채널 전환 없이 자연스럽게 갈린다</text>
+ <text x="490" y="522" class="muted" font-size="11">· 위치 보고는 근접 채널 참가 ~ 이탈 사이에만 돈다 (매니저가 StartReporting / StopReporting)</text>
+</svg>
+</body></html>

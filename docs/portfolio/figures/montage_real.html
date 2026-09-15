@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+ body{margin:0;background:#fff;font-family:"Malgun Gothic","Segoe UI",sans-serif;color:#1e293b}
+ .row{display:flex;align-items:flex-start;gap:0;padding:14px 20px}
+ .card{width:120px;text-align:center}
+ .card canvas{width:110px;height:110px;image-rendering:pixelated;border-radius:8px;background:#2b2f36;border:2px solid #7c3aed}
+ .card.off canvas{border:2px dashed #cbd5e1;background:#f1f5f9}
+ .card .t{font-size:12px;font-weight:700;color:#5b21b6;margin-top:8px}
+ .card .s{font-size:11px;color:#5b21b6}
+ .card.off .t,.card.off .s{color:#94a3b8}
+ .arrow{width:60px;height:110px;display:flex;align-items:center;justify-content:center}
+ .result canvas{width:150px;height:150px;border:2px solid #1e3a8a;background:#2b2f36;border-radius:8px;image-rendering:pixelated}
+ .result{width:170px;text-align:center}
+ .result .t{font-size:12px;font-weight:700;color:#1e3a8a;margin-top:8px}
+ .result .s{font-size:11px;color:#64748b}
+ .clar{display:flex;align-items:flex-start;gap:0;padding:14px 20px}
+ .clar .card{width:150px}
+ .clar .card canvas{width:140px;height:140px;border:2px solid #cbd5e1;background:#2b2f36}
+ .clar .card .t{color:#1e293b}.clar .card .s{color:#64748b;font-family:Consolas,monospace}
+ .clar .arrow{width:50px;height:140px}
+ .hdr{font-size:12px;color:#64748b;padding:12px 20px 0}
+</style></head><body>
+<div id="A">
+ <div class="hdr">겹침 순서 = 자식 순서 →</div>
+ <div class="row" id="rowA"></div>
+</div>
+<div id="B" style="display:none"><div class="clar" id="rowB"></div></div>
+<script>
+const P='montage_assets/';
+const files={base:'Montage_Base.png',hair:'Montage_HairStyle_7.png',beard:'Montage_FacialHair_1.png',hat:'Montage_Headwear_2.png',glass:'Montage_Eyewear_1.png'};
+const skin='rgb(217,173,140)', hairColor='rgb(116,76,56)';
+function load(src){return new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.src=P+src;});}
+function tinted(img,color){const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d');x.drawImage(img,0,0,128,128);if(color){x.globalCompositeOperation='source-in';x.fillStyle=color;x.fillRect(0,0,128,128);}return c;}
+function lbl(cls,txt){const e=document.createElement('div');e.className=cls;e.textContent=txt;return e;}
+function card(canvas,title,sub,on){const d=document.createElement('div');d.className='card'+(on?'':' off');d.appendChild(canvas);d.appendChild(lbl('t',title));d.appendChild(lbl('s',sub));return d;}
+function arrow(){const d=document.createElement('div');d.className='arrow';d.innerHTML='<svg width="40" height="20"><path d="M0 10 H30" stroke="#334155" stroke-width="2"/><path d="M28 3 L38 10 L28 17 z" fill="#334155"/></svg>';return d;}
+function degrade(src,n){const s=document.createElement('canvas');s.width=s.height=n;const sx=s.getContext('2d');sx.imageSmoothingEnabled=true;sx.imageSmoothingQuality='high';sx.drawImage(src,0,0,n,n);const o=document.createElement('canvas');o.width=o.height=128;const ox=o.getContext('2d');ox.imageSmoothingEnabled=false;ox.drawImage(s,0,0,128,128);return o;}
+(async()=>{
+ const im={};for(const k in files)im[k]=await load(files[k]);
+ const L={base:tinted(im.base,null),hair:tinted(im.hair,hairColor),beard:tinted(im.beard,null),hat:tinted(im.hat,null),glass:tinted(im.glass,null)};
+ const mode=new URLSearchParams(location.search).get('m')||'A';
+ if(mode==='A'){
+  const r=document.getElementById('rowA');
+  r.appendChild(card(L.base,'베이스','무채색 두상',true));
+  r.appendChild(card(L.hair,'머리','스타일 + 머리색 틴트',true));
+  const empty=()=>{const c=document.createElement('canvas');c.width=c.height=128;return c;};
+  r.appendChild(card(empty(),'수염',"없음 → 비움",false));
+  r.appendChild(card(L.hat,'모자','원본 색',true));
+  r.appendChild(card(empty(),'안경',"없음 → 비움",false));
+  r.appendChild(arrow());
+  const res=document.createElement('canvas');res.width=res.height=128;const x=res.getContext('2d');[L.base,L.hair,L.hat].forEach(c=>x.drawImage(c,0,0));
+  const d=document.createElement('div');d.className='result';d.appendChild(res);d.appendChild(lbl('t','몽타주'));d.appendChild(lbl('s','레이어 3장이 겹친 결과'));r.appendChild(d);
+ }else{
+  document.getElementById('A').style.display='none';document.getElementById('B').style.display='block';
+  const r=document.getElementById('rowB');
+  const res=document.createElement('canvas');res.width=res.height=128;const x=res.getContext('2d');[L.base,L.hair,L.beard,L.hat,L.glass].forEach(c=>x.drawImage(c,0,0));
+  const steps=[[128,'라운드 1'],[64,'라운드 2'],[32,'라운드 3'],[16,'라운드 4+']];
+  steps.forEach(([n,t],i)=>{r.appendChild(card(degrade(res,n),t,n+' px',true));if(i<3)r.appendChild(arrow());});
+ }
+})();
+</script>
+</body></html>

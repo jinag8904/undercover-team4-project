@@ -1,0 +1,150 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+ body{margin:0;background:#fff;font-family:"Malgun Gothic","Segoe UI",sans-serif}
+ svg{display:block}
+ .b{font-weight:700}
+ .mono{font-family:Consolas,"Malgun Gothic",monospace}
+ .lbl{font-size:12px;fill:#1e293b}
+ .sub{font-size:11px;fill:#64748b}
+</style></head><body>
+<svg width="1240" height="620" viewBox="0 0 1240 620" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <marker id="m" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
+  <marker id="mr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/></marker>
+  <!-- device icon -->
+  <symbol id="device" viewBox="0 0 60 44">
+   <rect x="2" y="2" width="56" height="34" rx="4" fill="#fff" stroke="#64748b" stroke-width="2"/>
+   <rect x="20" y="38" width="20" height="4" rx="1" fill="#64748b"/>
+  </symbol>
+  <!-- key icon -->
+  <symbol id="key" viewBox="0 0 40 20">
+   <circle cx="9" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="2.5"/>
+   <line x1="15" y1="10" x2="38" y2="10" stroke="currentColor" stroke-width="2.5"/>
+   <line x1="30" y1="10" x2="30" y2="16" stroke="currentColor" stroke-width="2.5"/>
+   <line x1="36" y1="10" x2="36" y2="16" stroke="currentColor" stroke-width="2.5"/>
+  </symbol>
+  <!-- person badge -->
+  <symbol id="person" viewBox="0 0 40 40">
+   <circle cx="20" cy="13" r="8" fill="currentColor"/>
+   <path d="M4 38 C4 26 36 26 36 38 Z" fill="currentColor"/>
+  </symbol>
+ </defs>
+
+ <!-- ===== concept strip ===== -->
+ <text x="30" y="34" class="b" font-size="15" fill="#1e293b">PlayerId는 "사람", 로그인은 그 사람임을 증명하는 "열쇠" — 열쇠가 두 종류다</text>
+
+ <g transform="translate(40,54)">
+  <!-- person -->
+  <rect x="0" y="0" width="230" height="90" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <use href="#person" x="16" y="22" width="44" height="44" color="#1e293b"/>
+  <text x="72" y="40" class="b" font-size="13" fill="#1e293b">PlayerId</text>
+  <text x="72" y="58" class="sub">UGS가 발급하는 고정 신원</text>
+  <text x="72" y="74" class="sub">세션·음성·세이브가 사람을 구분하는 기준</text>
+ </g>
+
+ <g transform="translate(300,54)">
+  <rect x="0" y="0" width="430" height="90" rx="12" fill="#ecfdf5" stroke="#0f766e" stroke-width="1.5"/>
+  <use href="#key" x="16" y="22" width="56" height="28" color="#0f766e"/>
+  <text x="84" y="34" class="b" font-size="13" fill="#065f46">열쇠 ① 세션 토큰 — 이 기기에만 붙는 열쇠</text>
+  <text x="84" y="54" class="sub">익명 로그인 성공 시 UGS가 기기에 남긴다. 다음엔 토큰만으로 같은 PlayerId.</text>
+  <text x="84" y="70" class="sub">기기 바꾸면 못 씀 · 지우면(ClearSessionToken) 다음 익명 로그인은 새 사람</text>
+ </g>
+
+ <g transform="translate(760,54)">
+  <rect x="0" y="0" width="440" height="90" rx="12" fill="#fff6e6" stroke="#b45309" stroke-width="1.5"/>
+  <use href="#key" x="16" y="22" width="56" height="28" color="#b45309"/>
+  <text x="84" y="34" class="b" font-size="13" fill="#7c3a00">열쇠 ② 아이디 / 비밀번호 — 어디서든 쓰는 열쇠</text>
+  <text x="84" y="54" class="sub">가입(AddUsernamePassword) = 지금 PlayerId에 이 열쇠를 하나 더 붙임.</text>
+  <text x="84" y="70" class="sub">PlayerId는 안 바뀐다 · 다른 기기에서 이 열쇠로 오면 그 PlayerId가 된다</text>
+ </g>
+
+ <!-- ===== scenarios ===== -->
+ <text x="30" y="182" class="b" font-size="15" fill="#1e293b">같은 사람인가? — 케이스별로 보면</text>
+ <text x="330" y="182" class="sub">위: 기기와 갖고 있는 열쇠 · 아래: 결과로 되는 PlayerId</text>
+
+ <!-- scenario card template: x offsets 40, 280, 520, 760, 1000 ; width 220 -->
+ <!-- ① first run -->
+ <g transform="translate(40,200)">
+  <rect x="0" y="0" width="220" height="250" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="110" y="24" text-anchor="middle" class="b" font-size="13" fill="#1e293b">① 첫 실행</text>
+  <use href="#device" x="80" y="40" width="60" height="44"/>
+  <text x="110" y="100" text-anchor="middle" class="sub">기기 A · 열쇠 없음</text>
+  <text x="110" y="126" text-anchor="middle" class="lbl">[게스트로 시작]</text>
+  <line x1="110" y1="134" x2="110" y2="156" stroke="#334155" stroke-width="1.5" marker-end="url(#m)"/>
+  <text x="110" y="176" text-anchor="middle" class="sub mono">SignInAnonymously</text>
+  <rect x="45" y="188" width="130" height="30" rx="15" fill="#fff6e6" stroke="#b45309" stroke-width="1.5"/>
+  <text x="110" y="208" text-anchor="middle" class="b" font-size="13" fill="#7c3a00">새 PlayerId #1</text>
+  <text x="110" y="236" text-anchor="middle" class="sub">→ 기기 A에 토큰 ① 저장됨</text>
+ </g>
+
+ <!-- ② rerun -->
+ <g transform="translate(280,200)">
+  <rect x="0" y="0" width="220" height="250" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="110" y="24" text-anchor="middle" class="b" font-size="13" fill="#1e293b">② 껐다 다시 켬</text>
+  <use href="#device" x="80" y="40" width="60" height="44"/>
+  <use href="#key" x="96" y="50" width="28" height="14" color="#0f766e"/>
+  <text x="110" y="100" text-anchor="middle" class="sub">기기 A · 토큰 ① 있음</text>
+  <text x="110" y="126" text-anchor="middle" class="lbl">자동 로그인</text>
+  <line x1="110" y1="134" x2="110" y2="156" stroke="#334155" stroke-width="1.5" marker-end="url(#m)"/>
+  <text x="110" y="176" text-anchor="middle" class="sub mono">SignInAnonymously</text>
+  <rect x="45" y="188" width="130" height="30" rx="15" fill="#ecfdf5" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="110" y="208" text-anchor="middle" class="b" font-size="13" fill="#065f46">같은 PlayerId #1</text>
+  <text x="110" y="236" text-anchor="middle" class="sub">토큰이 "#1이었던 사람"을 증명</text>
+ </g>
+
+ <!-- ③ sign up (link) -->
+ <g transform="translate(520,200)">
+  <rect x="0" y="0" width="220" height="250" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="110" y="24" text-anchor="middle" class="b" font-size="13" fill="#1e293b">③ 가입 (계정 연동)</text>
+  <use href="#device" x="80" y="40" width="60" height="44"/>
+  <use href="#key" x="96" y="50" width="28" height="14" color="#0f766e"/>
+  <text x="110" y="100" text-anchor="middle" class="sub">기기 A · #1로 로그인된 상태</text>
+  <text x="110" y="126" text-anchor="middle" class="lbl">[가입] 아이디·비번 입력</text>
+  <line x1="110" y1="134" x2="110" y2="156" stroke="#334155" stroke-width="1.5" marker-end="url(#m)"/>
+  <text x="110" y="176" text-anchor="middle" class="sub mono">AddUsernamePassword</text>
+  <rect x="45" y="188" width="130" height="30" rx="15" fill="#ecfdf5" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="110" y="208" text-anchor="middle" class="b" font-size="13" fill="#065f46">그대로 #1</text>
+  <text x="110" y="236" text-anchor="middle" class="sub">#1에 열쇠 ②가 하나 더 붙음</text>
+ </g>
+
+ <!-- ④ other device, account login -->
+ <g transform="translate(760,200)">
+  <rect x="0" y="0" width="220" height="250" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="110" y="24" text-anchor="middle" class="b" font-size="13" fill="#1e293b">④ 다른 기기에서 로그인</text>
+  <use href="#device" x="80" y="40" width="60" height="44"/>
+  <use href="#key" x="96" y="50" width="28" height="14" color="#b45309"/>
+  <text x="110" y="100" text-anchor="middle" class="sub">기기 B · 아이디·비번만 있음</text>
+  <text x="110" y="126" text-anchor="middle" class="lbl">[로그인]</text>
+  <line x1="110" y1="134" x2="110" y2="156" stroke="#334155" stroke-width="1.5" marker-end="url(#m)"/>
+  <text x="110" y="176" text-anchor="middle" class="sub mono">SignInWithUsernamePassword</text>
+  <rect x="45" y="188" width="130" height="30" rx="15" fill="#ecfdf5" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="110" y="208" text-anchor="middle" class="b" font-size="13" fill="#065f46">같은 PlayerId #1</text>
+  <text x="110" y="236" text-anchor="middle" class="sub">기기 B의 토큰(있어도)과 무관</text>
+ </g>
+
+ <!-- ⑤ login failed -->
+ <g transform="translate(1000,200)">
+  <rect x="0" y="0" width="220" height="250" rx="12" fill="#fff" stroke="#fca5a5" stroke-width="1.5"/>
+  <text x="110" y="24" text-anchor="middle" class="b" font-size="13" fill="#991b1b">⑤ 로그인 틀림</text>
+  <use href="#device" x="80" y="40" width="60" height="44"/>
+  <use href="#key" x="96" y="50" width="28" height="14" color="#0f766e"/>
+  <text x="110" y="100" text-anchor="middle" class="sub">기기 A · 토큰 ① 있음 · #1 상태</text>
+  <text x="110" y="126" text-anchor="middle" class="lbl">[로그인] 비번 오타</text>
+  <line x1="110" y1="134" x2="110" y2="156" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#mr)"/>
+  <text x="110" y="176" text-anchor="middle" class="sub">실패 → 남겨둔 토큰 ①로 익명 재로그인</text>
+  <rect x="45" y="188" width="130" height="30" rx="15" fill="#ecfdf5" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="110" y="208" text-anchor="middle" class="b" font-size="13" fill="#065f46">도로 #1</text>
+  <text x="110" y="236" text-anchor="middle" class="sub">로그아웃 상태로 남기지 않는다</text>
+ </g>
+
+ <!-- ===== bottom: the one rule ===== -->
+ <rect x="40" y="470" width="1180" height="128" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+ <text x="60" y="496" class="b" font-size="13" fill="#1e293b">그래서 코드가 하는 일은 이것뿐이다</text>
+ <g font-size="12">
+  <text x="60" y="520" class="lbl"><tspan class="b" fill="#0f766e">익명 로그인</tspan> = "기기에 토큰 있으면 그 사람, 없으면 새 사람" — UGS가 알아서 판단. 우리는 <tspan class="mono">SignInAnonymouslyAsync</tspan> 한 번 부를 뿐.</text>
+  <text x="60" y="542" class="lbl"><tspan class="b" fill="#b45309">계정 로그인</tspan> = "이 열쇠에 붙은 사람이 되겠다" — 성공하면 그 PlayerId. <tspan class="b">실패에 대비해 지금 토큰을 지우지 않고 SignOut만</tspan> 해 두는 게 우리 쪽 결정.</text>
+  <text x="60" y="564" class="lbl"><tspan class="b">새 계정으로 전환</tspan> = 토큰을 지우고(ClearSessionToken) 익명 로그인 → 새 사람. 서버의 계정·아이디는 그대로 남는다(UGS가 삭제 미지원).</text>
+  <text x="60" y="586" class="sub">공통 잠금: 세션 참가 중에는 셋 다 거부 — PlayerId가 바뀌면 로비 명부와 음성 참가자가 옛 ID를 들고 어긋난다.</text>
+ </g>
+</svg>
+</body></html>

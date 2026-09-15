@@ -1,0 +1,120 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+ body{margin:0;background:#fff;font-family:"Malgun Gothic","Segoe UI",sans-serif}
+ svg{display:block}
+ .b{font-weight:700}
+ .mono{font-family:Consolas,"Malgun Gothic",monospace}
+ .lbl{font-size:12px;fill:#1e293b}
+ .sub{font-size:11px;fill:#64748b}
+</style></head><body>
+<svg width="1240" height="560" viewBox="0 0 1240 560" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <marker id="m" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
+  <marker id="ma" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b45309"/></marker>
+  <marker id="mg" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0f766e"/></marker>
+  <marker id="mr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/></marker>
+ </defs>
+
+ <text x="30" y="34" class="b" font-size="15" fill="#1e293b">로그인 — 번호표(PlayerId)는 앱이 켜질 때 이미 받는다. 로그인 창은 "그 번호로 갈래, 다른 번호로 갈아탈래"를 묻는 곳</text>
+
+ <!-- ===== 1. app start -> auto anonymous ===== -->
+ <rect x="30" y="70" width="120" height="44" rx="22" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+ <text x="90" y="97" text-anchor="middle" class="b" font-size="13" fill="#475569">앱 실행</text>
+ <line x1="150" y1="92" x2="182" y2="92" stroke="#334155" stroke-width="1.5" marker-end="url(#m)"/>
+
+ <rect x="186" y="70" width="130" height="44" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+ <text x="251" y="88" text-anchor="middle" class="lbl b">UGS 초기화</text>
+ <text x="251" y="104" text-anchor="middle" class="sub mono">InitializeAsync</text>
+ <line x1="316" y1="92" x2="348" y2="92" stroke="#334155" stroke-width="1.5" marker-end="url(#m)"/>
+
+ <!-- auto anonymous login block -->
+ <rect x="352" y="52" width="410" height="128" rx="12" fill="#ecfdf5" stroke="#0f766e" stroke-width="2"/>
+ <text x="368" y="74" class="b" font-size="13" fill="#065f46">익명 자동 로그인 — 버튼 누르기 전에 이미 돈다</text>
+ <text x="368" y="90" class="sub mono">m_signInOnStart → SignInAnonymouslyAsync</text>
+
+ <g transform="translate(440,132)">
+  <polygon points="0,-28 62,0 0,28 -62,0" fill="#fff" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="0" y="-3" text-anchor="middle" class="lbl b" fill="#065f46">기기에 쪽지</text>
+  <text x="0" y="12" text-anchor="middle" class="sub">(토큰) 있나?</text>
+ </g>
+ <line x1="502" y1="120" x2="560" y2="120" stroke="#0f766e" stroke-width="1.5" marker-end="url(#mg)"/>
+ <text x="530" y="112" text-anchor="middle" class="sub b" fill="#0f766e">있음</text>
+ <rect x="564" y="104" width="184" height="30" rx="15" fill="#fff" stroke="#0f766e" stroke-width="1.5"/>
+ <text x="656" y="124" text-anchor="middle" class="lbl b" fill="#065f46">전에 받은 번호 #1 그대로</text>
+
+ <line x1="502" y1="146" x2="560" y2="146" stroke="#b45309" stroke-width="1.5" marker-end="url(#ma)"/>
+ <text x="532" y="162" text-anchor="middle" class="sub b" fill="#b45309">없음·첫 실행</text>
+ <rect x="564" y="140" width="184" height="30" rx="15" fill="#fff6e6" stroke="#b45309" stroke-width="1.5"/>
+ <text x="656" y="160" text-anchor="middle" class="lbl b" fill="#7c3a00">새 번호 #1 발급 + 쪽지 저장</text>
+
+ <!-- ===== 2. gate ===== -->
+ <line x1="762" y1="116" x2="800" y2="116" stroke="#334155" stroke-width="1.5" marker-end="url(#m)"/>
+ <g transform="translate(870,116)">
+  <polygon points="0,-40 68,0 0,40 -68,0" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="0" y="-4" text-anchor="middle" class="lbl b">관문 통과</text>
+  <text x="0" y="12" text-anchor="middle" class="sub">기록 있나?</text>
+ </g>
+ <!-- yes -> session screen -->
+ <line x1="938" y1="116" x2="1000" y2="116" stroke="#0f766e" stroke-width="1.5" marker-end="url(#mg)"/>
+ <text x="969" y="108" text-anchor="middle" class="sub b" fill="#0f766e">예</text>
+ <rect x="1004" y="94" width="200" height="44" rx="22" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.5"/>
+ <text x="1104" y="113" text-anchor="middle" class="b" font-size="13" fill="#065f46">세션 화면</text>
+ <text x="1104" y="129" text-anchor="middle" class="sub">#1로 바로 방 만들기 · 참가</text>
+ <!-- no -> gate panel -->
+ <line x1="870" y1="156" x2="870" y2="200" stroke="#b91c1c" stroke-width="1.5" marker-end="url(#mr)"/>
+ <text x="882" y="182" class="sub b" fill="#b91c1c">아니오 → 로그인 창</text>
+
+ <!-- ===== 3. gate panel: three buttons ===== -->
+ <rect x="30" y="206" width="1174" height="220" rx="12" fill="#fff6e6" stroke="#e7c48d" stroke-width="1.5"/>
+ <text x="50" y="230" class="b" font-size="13" fill="#7c3a00">로그인 창 (AuthGatePanel) — 이미 #1로 로그인된 상태에서 고른다</text>
+
+ <!-- guest -->
+ <g transform="translate(50,246)">
+  <rect x="0" y="0" width="360" height="166" rx="10" fill="#fff" stroke="#0f766e" stroke-width="1.5"/>
+  <rect x="14" y="14" width="150" height="28" rx="14" fill="#ecfdf5" stroke="#0f766e"/>
+  <text x="89" y="33" text-anchor="middle" class="lbl b" fill="#065f46">[게스트로 시작]</text>
+  <text x="14" y="64" class="lbl">이미 로그인돼 있으니 <tspan class="b">아무것도 안 한다</tspan></text>
+  <text x="14" y="82" class="sub mono">Auth.IsSignedIn → Pass()</text>
+  <line x1="180" y1="100" x2="180" y2="118" stroke="#0f766e" stroke-width="1.5" marker-end="url(#mg)"/>
+  <rect x="100" y="122" width="160" height="30" rx="15" fill="#ecfdf5" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="180" y="142" text-anchor="middle" class="lbl b" fill="#065f46">#1 그대로</text>
+ </g>
+
+ <!-- sign up -->
+ <g transform="translate(430,246)">
+  <rect x="0" y="0" width="360" height="166" rx="10" fill="#fff" stroke="#0f766e" stroke-width="1.5"/>
+  <rect x="14" y="14" width="150" height="28" rx="14" fill="#ecfdf5" stroke="#0f766e"/>
+  <text x="89" y="33" text-anchor="middle" class="lbl b" fill="#065f46">[가입]  아이디·비번 입력</text>
+  <text x="14" y="64" class="lbl">지금 번호 #1에 <tspan class="b">아이디/비번을 붙인다</tspan></text>
+  <text x="14" y="82" class="sub mono">AddUsernamePasswordAsync — 번호는 안 바뀐다</text>
+  <line x1="180" y1="100" x2="180" y2="118" stroke="#0f766e" stroke-width="1.5" marker-end="url(#mg)"/>
+  <rect x="80" y="122" width="200" height="30" rx="15" fill="#ecfdf5" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="180" y="142" text-anchor="middle" class="lbl b" fill="#065f46">#1 그대로 + 다른 기기에서도 가능</text>
+ </g>
+
+ <!-- sign in existing -->
+ <g transform="translate(810,246)">
+  <rect x="0" y="0" width="374" height="166" rx="10" fill="#fff" stroke="#b45309" stroke-width="1.5"/>
+  <rect x="14" y="14" width="180" height="28" rx="14" fill="#fff6e6" stroke="#b45309"/>
+  <text x="104" y="33" text-anchor="middle" class="lbl b" fill="#7c3a00">[로그인]  기존 계정 아이디·비번</text>
+  <text x="14" y="64" class="lbl">#1 로그아웃(쪽지는 남김) → <tspan class="b">그 계정의 번호로 갈아탐</tspan></text>
+  <text x="14" y="82" class="sub mono">SignOut(토큰 유지) → SignInWithUsernamePassword</text>
+  <line x1="120" y1="100" x2="120" y2="118" stroke="#b45309" stroke-width="1.5" marker-end="url(#ma)"/>
+  <rect x="30" y="122" width="180" height="30" rx="15" fill="#fff6e6" stroke="#b45309" stroke-width="1.5"/>
+  <text x="120" y="142" text-anchor="middle" class="lbl b" fill="#7c3a00">예전 번호 #7 (#1은 버림)</text>
+  <line x1="240" y1="100" x2="240" y2="118" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#mr)"/>
+  <text x="240" y="96" text-anchor="middle" class="sub" fill="#b91c1c">비번 틀림</text>
+  <rect x="222" y="122" width="140" height="30" rx="15" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+  <text x="292" y="142" text-anchor="middle" class="lbl b" fill="#991b1b">쪽지로 #1 복귀</text>
+ </g>
+
+ <!-- ===== 4. converge ===== -->
+ <text x="30" y="456" class="b" font-size="13" fill="#1e293b">셋 다 끝나면 → 관문 통과 기록 → OnSignedIn → 세션 화면.  다음에 켜면 관문을 건너뛴다.</text>
+
+ <!-- ===== rules ===== -->
+ <rect x="30" y="470" width="1174" height="76" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+ <text x="50" y="494" class="lbl"><tspan class="b">번호가 새로 발급되는 순간은 하나뿐</tspan> — 앱을 켰을 때 쪽지가 없을 때. 버튼 셋 중 어느 것도 새 번호를 만들지 않는다.</text>
+ <text x="50" y="514" class="lbl"><tspan class="b">쪽지를 일부러 지우는 건</tspan> [새 계정으로 전환]뿐 — 그때만 다음 익명 로그인이 새 번호가 된다.</text>
+ <text x="50" y="534" class="sub">세션 참가 중에는 셋 다 잠김 — 번호가 바뀌면 로비 명부·음성 참가자가 옛 번호를 들고 어긋나기 때문. (계층 슬라이드의 CanSignOut 게이트)</text>
+</svg>
+</body></html>

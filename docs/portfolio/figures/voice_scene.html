@@ -1,0 +1,89 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+ body{margin:0;background:#fff;font-family:"Malgun Gothic","Segoe UI",sans-serif}
+ svg{display:block}
+ .b{font-weight:700}
+ .mono{font-family:Consolas,"Malgun Gothic",monospace}
+</style></head><body>
+<svg width="1240" height="480" viewBox="0 0 1240 480" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <radialGradient id="prox" cx="50%" cy="50%" r="50%">
+   <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.35"/>
+   <stop offset="20%" stop-color="#7c3aed" stop-opacity="0.28"/>
+   <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+  </radialGradient>
+  <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+   <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+  </pattern>
+ </defs>
+
+ <!-- ===== LEFT: open mic ===== -->
+ <g transform="translate(20,20)">
+  <rect x="0" y="0" width="590" height="440" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <rect x="1" y="1" width="588" height="438" rx="14" fill="url(#grid)"/>
+  <text x="20" y="32" class="b" font-size="16" fill="#1e293b">평소 — 오픈마이크</text>
+  <text x="20" y="52" class="mono" font-size="12" fill="#475569">TransmissionMode.Single(Proximity) — 근접 채널로만 송신</text>
+
+  <circle cx="200" cy="250" r="150" fill="url(#prox)"/>
+  <circle cx="200" cy="250" r="150" fill="none" stroke="#7c3aed" stroke-width="1" stroke-dasharray="4 4" opacity="0.6"/>
+  <circle cx="200" cy="250" r="30" fill="none" stroke="#7c3aed" stroke-width="1.5" opacity="0.9"/>
+  <text x="166" y="230" text-anchor="end" font-size="11" fill="#7c3aed">3m</text>
+  <text x="200" y="420" text-anchor="middle" font-size="11" fill="#7c3aed">15m — 여기까지 희미하게 들린다</text>
+
+  <circle cx="200" cy="250" r="14" fill="#7c3aed"/>
+  <text x="200" y="255" text-anchor="middle" class="b" font-size="12" fill="#fff">A</text>
+  <text x="200" y="296" text-anchor="middle" class="b" font-size="12" fill="#5b21b6">A · 말하는 중</text>
+
+  <circle cx="222" cy="232" r="12" fill="#fff" stroke="#7c3aed" stroke-width="2.5"/>
+  <text x="222" y="236" text-anchor="middle" class="b" font-size="11" fill="#5b21b6">B</text>
+  <text x="242" y="228" font-size="11" fill="#5b21b6">B · 2m · 크게 들림</text>
+
+  <circle cx="310" cy="330" r="12" fill="#fff" stroke="#a78bfa" stroke-width="2"/>
+  <text x="310" y="334" text-anchor="middle" class="b" font-size="11" fill="#7c3aed">C</text>
+  <text x="330" y="350" font-size="11" fill="#7c3aed">C · 11m · 작게 들림</text>
+
+  <circle cx="500" cy="250" r="12" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+  <text x="500" y="254" text-anchor="middle" class="b" font-size="11" fill="#64748b">D</text>
+  <text x="500" y="282" text-anchor="middle" font-size="11" fill="#94a3b8">D · 30m · 안 들림</text>
+ </g>
+
+ <!-- ===== RIGHT: PTT ===== -->
+ <g transform="translate(630,20)">
+  <rect x="0" y="0" width="590" height="440" rx="14" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.5"/>
+  <rect x="1" y="1" width="588" height="438" rx="14" fill="url(#grid)"/>
+  <text x="20" y="32" class="b" font-size="16" fill="#5b21b6">PTT 누름 — 무전</text>
+  <text x="20" y="52" class="mono" font-size="12" fill="#475569">TransmissionMode.All — 무전 + 근접 둘 다 송신</text>
+
+  <circle cx="200" cy="250" r="150" fill="url(#prox)"/>
+  <circle cx="200" cy="250" r="30" fill="none" stroke="#7c3aed" stroke-width="1.5" opacity="0.9"/>
+
+  <g fill="none" stroke="#7c3aed" stroke-width="2.2" opacity="0.9">
+   <path d="M 239.8 216.6 A 52 52 0 0 1 247.1 272.0"/>
+   <path d="M 261.3 198.6 A 80 80 0 0 1 272.5 283.8"/>
+   <path d="M 282.7 180.6 A 108 108 0 0 1 297.9 295.6"/>
+  </g>
+  <g fill="none" stroke="#7c3aed" stroke-width="1.6" stroke-dasharray="7 5" opacity="0.7">
+   <path d="M 307.2 160.0 A 140 140 0 0 1 326.9 309.2"/>
+   <path d="M 334.1 137.5 A 175 175 0 0 1 358.6 324.0"/>
+   <path d="M 360.9 115.0 A 210 210 0 0 1 390.3 338.7"/>
+  </g>
+  <text x="330" y="392" text-anchor="middle" class="b" font-size="11" fill="#7c3aed">Radio 채널 — 거리와 무관하게 전원에게</text>
+
+  <circle cx="200" cy="250" r="14" fill="#7c3aed"/>
+  <text x="200" y="255" text-anchor="middle" class="b" font-size="12" fill="#fff">A</text>
+  <text x="200" y="296" text-anchor="middle" class="b" font-size="12" fill="#5b21b6">A · PTT 송신 중</text>
+
+  <circle cx="222" cy="232" r="12" fill="#fff" stroke="#7c3aed" stroke-width="2.5"/>
+  <text x="222" y="236" text-anchor="middle" class="b" font-size="11" fill="#5b21b6">B</text>
+  <text x="176" y="214" text-anchor="end" font-size="11" fill="#5b21b6">B · 무전 + 육성</text>
+
+  <circle cx="310" cy="330" r="12" fill="#fff" stroke="#7c3aed" stroke-width="2.5"/>
+  <text x="310" y="334" text-anchor="middle" class="b" font-size="11" fill="#5b21b6">C</text>
+  <text x="294" y="352" text-anchor="end" font-size="11" fill="#5b21b6">C · 무전으로 또렷</text>
+
+  <circle cx="500" cy="250" r="12" fill="#fff" stroke="#7c3aed" stroke-width="2.5"/>
+  <text x="500" y="254" text-anchor="middle" class="b" font-size="11" fill="#5b21b6">D</text>
+  <text x="500" y="282" text-anchor="middle" class="b" font-size="11" fill="#5b21b6">D · 30m · 무전으로 들림</text>
+ </g>
+</svg>
+</body></html>

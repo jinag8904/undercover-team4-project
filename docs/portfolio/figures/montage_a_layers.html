@@ -1,0 +1,52 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+ body{margin:0;background:#fff;font-family:"Malgun Gothic","Segoe UI",sans-serif}
+ svg{display:block}
+ .b{font-weight:700}
+ .mono{font-family:Consolas,"Malgun Gothic",monospace}
+</style></head><body>
+<svg width="900" height="170" viewBox="0 0 900 170" xmlns="http://www.w3.org/2000/svg"><defs>
+  <marker id="m" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
+  <marker id="mb" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/></marker>
+  <marker id="mr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/></marker>
+  <marker id="mg" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0f766e"/></marker>
+ </defs>
+ <text x="20" y="24" font-size="12" fill="#64748b">겹침 순서 = 자식 순서 →</text>
+ <g transform="translate(20,36)">
+  <rect x="0" y="0" width="110" height="110" rx="8" fill="#fff" stroke="#7c3aed" stroke-width="2" />
+  <circle cx="55" cy="50" r="30" fill="#e2e8f0" stroke="#94a3b8"/><rect x="35" y="80" width="40" height="22" rx="6" fill="#e2e8f0" stroke="#94a3b8"/>
+  <text x="55" y="132" text-anchor="middle" font-size="12" fill="#5b21b6" class="b">베이스 (항상)</text>
+  <text x="55" y="148" text-anchor="middle" font-size="11" fill="#5b21b6">공개</text>
+ </g>
+ <g transform="translate(150,36)">
+  <rect x="0" y="0" width="110" height="110" rx="8" fill="#fff" stroke="#7c3aed" stroke-width="2" />
+  <path d="M 25 50 A 30 30 0 0 1 85 50 L 80 50 A 25 25 0 0 0 30 50 Z" fill="#7c3aed"/>
+  <text x="55" y="132" text-anchor="middle" font-size="12" fill="#5b21b6" class="b">머리</text>
+  <text x="55" y="148" text-anchor="middle" font-size="11" fill="#5b21b6">공개</text>
+ </g>
+ <g transform="translate(280,36)">
+  <rect x="0" y="0" width="110" height="110" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="5 4"/>
+  
+  <text x="55" y="132" text-anchor="middle" font-size="12" fill="#94a3b8" class="b">수염</text>
+  <text x="55" y="148" text-anchor="middle" font-size="11" fill="#94a3b8">미공개 → 안 그림</text>
+ </g>
+ <g transform="translate(410,36)">
+  <rect x="0" y="0" width="110" height="110" rx="8" fill="#fff" stroke="#7c3aed" stroke-width="2" />
+  <rect x="20" y="24" width="70" height="10" rx="3" fill="#7c3aed"/><rect x="32" y="8" width="46" height="18" rx="4" fill="#7c3aed"/>
+  <text x="55" y="132" text-anchor="middle" font-size="12" fill="#5b21b6" class="b">모자</text>
+  <text x="55" y="148" text-anchor="middle" font-size="11" fill="#5b21b6">공개</text>
+ </g>
+ <g transform="translate(540,36)">
+  <rect x="0" y="0" width="110" height="110" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="5 4"/>
+  
+  <text x="55" y="132" text-anchor="middle" font-size="12" fill="#94a3b8" class="b">안경</text>
+  <text x="55" y="148" text-anchor="middle" font-size="11" fill="#94a3b8">미공개 → 안 그림</text>
+ </g>
+ <line x1="662" y1="91" x2="700" y2="91" stroke="#334155" stroke-width="1.8" marker-end="url(#m)"/>
+ <g transform="translate(704,36)">
+  <rect x="0" y="0" width="150" height="110" rx="8" fill="#fff" stroke="#1e3a8a" stroke-width="2"/>
+  <g transform="translate(20,0)"><circle cx="55" cy="50" r="30" fill="#e2e8f0" stroke="#94a3b8"/><rect x="35" y="80" width="40" height="22" rx="6" fill="#e2e8f0" stroke="#94a3b8"/><path d="M 25 50 A 30 30 0 0 1 85 50 L 80 50 A 25 25 0 0 0 30 50 Z" fill="#7c3aed"/><rect x="20" y="24" width="70" height="10" rx="3" fill="#7c3aed"/><rect x="32" y="8" width="46" height="18" rx="4" fill="#7c3aed"/></g>
+  <text x="75" y="132" text-anchor="middle" font-size="12" class="b" fill="#1e3a8a">몽타주</text>
+  <text x="75" y="148" text-anchor="middle" font-size="11" fill="#64748b">공개 축 = {머리, 모자}</text>
+ </g>
+</svg></body></html>

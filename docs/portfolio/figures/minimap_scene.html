@@ -1,0 +1,67 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+ body{margin:0;background:#fff;font-family:"Malgun Gothic","Segoe UI",sans-serif}
+ svg{display:block}
+ .b{font-weight:700}
+ .mono{font-family:Consolas,"Malgun Gothic",monospace}
+</style></head><body>
+<svg width="900" height="300" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <marker id="m" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
+  <marker id="mg" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0f766e"/></marker>
+  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="1"/></pattern>
+ </defs>
+
+ <!-- ===== world (left) ===== -->
+ <text x="30" y="26" class="b" font-size="13" fill="#1e293b">월드 (X·Z)</text>
+ <rect x="30" y="36" width="300" height="220" fill="url(#grid)" stroke="#cbd5e1"/>
+ <!-- some buildings -->
+ <g fill="#cbd5e1">
+  <rect x="60" y="60" width="50" height="40"/><rect x="200" y="70" width="70" height="30"/>
+  <rect x="70" y="170" width="40" height="50"/><rect x="220" y="150" width="60" height="60"/>
+ </g>
+ <!-- map area rectangle -->
+ <rect x="50" y="50" width="260" height="190" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-dasharray="7 5"/>
+ <circle cx="180" cy="145" r="4" fill="#1d4ed8"/>
+ <text x="188" y="142" font-size="10" fill="#1d4ed8" class="mono">center</text>
+ <line x1="50" y1="248" x2="310" y2="248" stroke="#1d4ed8" stroke-width="1"/>
+ <text x="180" y="262" text-anchor="middle" font-size="10" fill="#1d4ed8" class="mono">worldSizeX</text>
+ <line x1="318" y1="50" x2="318" y2="240" stroke="#1d4ed8" stroke-width="1"/>
+ <text x="322" y="148" font-size="10" fill="#1d4ed8" class="mono" transform="rotate(90 322 148)">worldSizeZ</text>
+ <!-- targets in world -->
+ <circle cx="120" cy="120" r="6" fill="#dc2626"/>
+ <circle cx="250" cy="200" r="6" fill="#16a34a"/>
+ <circle cx="230" cy="110" r="6" fill="#f59e0b"/><text x="230" y="114" text-anchor="middle" font-size="8" fill="#fff" class="b">3</text>
+ <text x="120" y="108" text-anchor="middle" font-size="10" fill="#dc2626">플레이어</text>
+ <text x="250" y="218" text-anchor="middle" font-size="10" fill="#16a34a">NPC</text>
+ <text x="230" y="98" text-anchor="middle" font-size="10" fill="#f59e0b">CCTV 3</text>
+
+ <!-- ===== transform (center) ===== -->
+ <line x1="336" y1="145" x2="404" y2="145" stroke="#334155" stroke-width="2" marker-end="url(#m)"/>
+ <rect x="408" y="98" width="164" height="94" rx="12" fill="#e8f0fe" stroke="#a9c0ea" stroke-width="1.5"/>
+ <text x="490" y="120" text-anchor="middle" class="b" font-size="12" fill="#1e3a8a">WorldToMap</text>
+ <text x="490" y="142" text-anchor="middle" class="mono" font-size="11" fill="#1e3a8a">u = (x − cx) / sizeX</text>
+ <text x="490" y="158" text-anchor="middle" class="mono" font-size="11" fill="#1e3a8a">v = (z − cz) / sizeZ</text>
+ <text x="490" y="180" text-anchor="middle" font-size="10" fill="#475569">× 지도 픽셀 크기</text>
+ <line x1="572" y1="145" x2="640" y2="145" stroke="#334155" stroke-width="2" marker-end="url(#m)"/>
+
+ <!-- ===== minimap (right) ===== -->
+ <text x="644" y="26" class="b" font-size="13" fill="#1e293b">미니맵 (UI)</text>
+ <rect x="644" y="36" width="236" height="172" rx="6" fill="#fefce8" stroke="#334155" stroke-width="2"/>
+ <!-- baked aerial hint -->
+ <g fill="#e5e7eb">
+  <rect x="653" y="56" width="45" height="36"/><rect x="780" y="65" width="63" height="27"/>
+  <rect x="662" y="155" width="36" height="45"/><rect x="798" y="137" width="54" height="54"/>
+ </g>
+ <text x="762" y="50" text-anchor="middle" font-size="9" fill="#94a3b8">구운 항공뷰 배경</text>
+ <!-- same targets mapped -->
+ <circle cx="707" cy="99" r="6" fill="#dc2626"/>
+ <circle cx="825" cy="171" r="6" fill="#16a34a"/>
+ <circle cx="807" cy="90" r="6" fill="#f59e0b"/><text x="807" y="94" text-anchor="middle" font-size="8" fill="#fff" class="b">3</text>
+ <!-- registration -->
+ <rect x="644" y="220" width="236" height="60" rx="10" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.5"/>
+ <text x="762" y="240" text-anchor="middle" class="b" font-size="11" fill="#065f46">아이콘은 대상이 스스로 등록</text>
+ <text x="762" y="256" text-anchor="middle" class="mono" font-size="10" fill="#065f46">MinimapTarget.OnEnable → ActiveTargets.Add</text>
+ <text x="762" y="271" text-anchor="middle" class="mono" font-size="10" fill="#065f46">OnDisable → Remove</text>
+</svg>
+</body></html>

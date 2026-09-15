@@ -1,0 +1,112 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+ body{margin:0;background:#fff;font-family:"Malgun Gothic","Segoe UI",sans-serif}
+ svg{display:block}
+ .b{font-weight:700}
+ .mono{font-family:Consolas,"Malgun Gothic",monospace}
+ .lbl{font-size:12px;fill:#1e293b}
+ .sub{font-size:11px;fill:#64748b}
+</style></head><body>
+<svg width="1240" height="476" viewBox="0 0 1240 476" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <marker id="m" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
+  <marker id="mg" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0f766e"/></marker>
+ </defs>
+
+ <!-- ===== timeline ===== -->
+ <text x="30" y="36" class="b" font-size="15" fill="#1e293b">세션 타임라인 — 씬을 넘는 길목마다 저장</text>
+
+ <!-- phase blocks -->
+ <g font-size="12" class="b">
+  <rect x="40" y="120" width="130" height="40" rx="8" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="105" y="145" text-anchor="middle" fill="#475569">타이틀</text>
+  <rect x="200" y="120" width="200" height="40" rx="8" fill="#e8f0fe" stroke="#a9c0ea"/>
+  <text x="300" y="145" text-anchor="middle" fill="#1e3a8a">라운드 1</text>
+  <rect x="430" y="120" width="130" height="40" rx="8" fill="#fff7ed" stroke="#fdba74"/>
+  <text x="495" y="145" text-anchor="middle" fill="#9a3412">상점</text>
+  <rect x="590" y="120" width="200" height="40" rx="8" fill="#e8f0fe" stroke="#a9c0ea"/>
+  <text x="690" y="145" text-anchor="middle" fill="#1e3a8a">라운드 2</text>
+  <rect x="820" y="120" width="130" height="40" rx="8" fill="#fff7ed" stroke="#fdba74"/>
+  <text x="885" y="145" text-anchor="middle" fill="#9a3412">상점</text>
+  <rect x="980" y="120" width="200" height="40" rx="8" fill="#fef2f2" stroke="#fca5a5"/>
+  <text x="1080" y="145" text-anchor="middle" fill="#991b1b">라운드 3 — 실패</text>
+ </g>
+ <!-- connectors -->
+ <g stroke="#94a3b8" stroke-width="1.5" marker-end="url(#m)">
+  <line x1="170" y1="140" x2="198" y2="140"/>
+  <line x1="400" y1="140" x2="428" y2="140"/>
+  <line x1="560" y1="140" x2="588" y2="140"/>
+  <line x1="790" y1="140" x2="818" y2="140"/>
+  <line x1="950" y1="140" x2="978" y2="140"/>
+ </g>
+
+ <!-- LOAD markers (above, green down-arrows) -->
+ <g>
+  <rect x="45" y="44" width="120" height="40" rx="6" fill="#ecfdf5" stroke="#6ee7b7"/>
+  <text x="105" y="60" text-anchor="middle" class="lbl b" fill="#065f46">로드 · 세이브 조회</text>
+  <text x="105" y="76" text-anchor="middle" class="sub mono">RefreshAsync</text>
+  <path d="M 105 86 L 105 112" stroke="#0f766e" stroke-width="2" marker-end="url(#mg)"/>
+
+  <rect x="176" y="44" width="160" height="40" rx="6" fill="#ecfdf5" stroke="#6ee7b7"/>
+  <text x="256" y="60" text-anchor="middle" class="lbl b" fill="#065f46">이어하기 → Pending 적용</text>
+  <text x="256" y="76" text-anchor="middle" class="sub">홀더가 스폰하며 읽음</text>
+  <path d="M 200 86 L 200 112" stroke="#0f766e" stroke-width="2" marker-end="url(#mg)"/>
+ </g>
+
+ <!-- SAVE pins (below the line) -->
+ <g>
+  <!-- pin helper: circle + stem -->
+  <g transform="translate(415,160)">
+   <line x1="0" y1="0" x2="0" y2="26" stroke="#0f766e" stroke-width="2"/>
+   <circle cx="0" cy="34" r="9" fill="#0f766e"/><text x="0" y="38" text-anchor="middle" font-size="10" class="b" fill="#fff">S</text>
+   <text x="0" y="60" text-anchor="middle" class="lbl b" fill="#065f46">① 성공 → 상점</text>
+   <text x="0" y="74" text-anchor="middle" class="sub">정산 반영</text>
+  </g>
+  <g transform="translate(575,160)">
+   <line x1="0" y1="0" x2="0" y2="26" stroke="#0f766e" stroke-width="2"/>
+   <circle cx="0" cy="34" r="9" fill="#0f766e"/><text x="0" y="38" text-anchor="middle" font-size="10" class="b" fill="#fff">S</text>
+   <text x="0" y="60" text-anchor="middle" class="lbl b" fill="#065f46">② 출동 → 게임</text>
+   <text x="0" y="74" text-anchor="middle" class="sub">구매 반영</text>
+  </g>
+  <g transform="translate(805,160)">
+   <line x1="0" y1="0" x2="0" y2="26" stroke="#0f766e" stroke-width="2"/>
+   <circle cx="0" cy="34" r="9" fill="#0f766e"/><text x="0" y="38" text-anchor="middle" font-size="10" class="b" fill="#fff">S</text>
+   <text x="0" y="60" text-anchor="middle" class="lbl b" fill="#065f46">① 성공 → 상점</text>
+  </g>
+  <g transform="translate(965,160)">
+   <line x1="0" y1="0" x2="0" y2="26" stroke="#0f766e" stroke-width="2"/>
+   <circle cx="0" cy="34" r="9" fill="#0f766e"/><text x="0" y="38" text-anchor="middle" font-size="10" class="b" fill="#fff">S</text>
+   <text x="0" y="60" text-anchor="middle" class="lbl b" fill="#065f46">② 출동 → 게임</text>
+  </g>
+  <g transform="translate(1180,160)">
+   <line x1="0" y1="0" x2="0" y2="26" stroke="#b91c1c" stroke-width="2"/>
+   <circle cx="0" cy="34" r="9" fill="#b91c1c"/><text x="0" y="38" text-anchor="middle" font-size="11" class="b" fill="#fff">✕</text>
+   <text x="0" y="60" text-anchor="middle" class="lbl b" fill="#991b1b">실패 → 삭제</text>
+   <text x="0" y="74" text-anchor="middle" class="sub">DeleteAsync</text>
+  </g>
+ </g>
+ <!-- shop-purchase note -->
+ <text x="495" y="262" text-anchor="middle" class="sub">상점에서 물건을 살 때마다도 저장 (#925)</text>
+
+<!-- ===== what is saved ===== -->
+ <text x="30" y="290" class="b" font-size="15" fill="#1e293b">세이브 한 벌에 담기는 것 — SessionSaveData</text>
+
+ <g font-size="12">
+  <rect x="40" y="306" width="560" height="150" rx="12" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.5"/>
+  <text x="60" y="330" class="lbl b" fill="#065f46">판 진행</text>
+  <text x="60" y="352" class="mono lbl">Round        = 3</text>
+  <text x="60" y="372" class="mono lbl">TeamFund     = 2400</text>
+  <text x="60" y="392" class="mono lbl">MapIndex     = 1</text>
+  <text x="60" y="428" class="sub">복원: RoundProgress · TeamFund · MapSelection이 세션 시작 시 스폰하며 Pending을 읽는다</text>
+
+  <rect x="620" y="306" width="560" height="150" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/>
+  <text x="640" y="330" class="lbl b" fill="#9a3412">상점 상태</text>
+  <text x="640" y="352" class="mono lbl">CarriedItems  = [taser, rope]</text>
+  <text x="640" y="372" class="mono lbl">Installables  = [Camera]</text>
+  <text x="640" y="392" class="mono lbl">ShopSlots     = 이번 라운드 진열</text>
+  <text x="640" y="428" class="sub">복원: ShopPurchases가 읽는다 · 진열은 라운드가 같을 때만 (지난 라운드 것이면 새로 뽑음)</text>
+
+ </g>
+
+</svg>
+</body></html>

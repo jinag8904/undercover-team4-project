@@ -1,0 +1,18 @@
+- [User profile](user-profile.md) — 김진아: 네트워크 담당, 한국어, 직접 편집·최소핵심·이해 지향
+- [Edits by user](edits-by-user.md) — 편집 주체는 작업마다 다름; 착수 전 설명 먼저, Unity Editor 작업은 사용자 몫
+- [Short comments preferred](short-comments-preferred.md) — 주석 길면 줄일 것; 근거는 남기고 서술만 압축
+- [Network foundation work](network-foundation-work.md) — 사용자가 맡은 네트워크 기반 #53/#54 계획·상태·순서
+- [Network study reuse](network-study-reuse.md) — 재활용 가능한 학원 실습 네트워크 코드 위치·파일별 용도
+- [CCTV network sync design](cctv-network-sync-design.md) — CCTV 동기화 설계 + #43-B 상호작용 통합 디버깅 진행 상태
+- [Lobby issue #154](lobby-issue-154.md) — 로비 구현 설계 결정(LobbyManager 분리)과 4단계 작업 순서
+- [Issue sequence plan](issue-sequence-plan.md) — 진행 순서 #218→#234→#222→#223→#221 (#169 완료)
+- [Issue 222 faction symbol](issue-222-faction-symbol.md) — #222 세력 문양: 확정 설계·1~3단계 완료, 4단계부터 재개
+- [MCP Unity registration](mcp-unity-registration.md) — Unity(Coplay) MCP 서버 Claude Code 등록법·스코프 함정·8080
+- [Minimal core first](minimal-core-first.md) — 최소 핵심 뼈대부터, 필요할 때 덧붙이는 방식 선호
+- [Explain deliverable per step](explain-deliverable-per-step.md) — 작업 착수 시 산출물부터 간략히 설명
+- [Parallel git ops](parallel-git-ops.md) — 사용자가 세션 중 직접 git 조작; 되돌리기 어려운 명령 전 브랜치·상태 재확인
+- [PR review automation](pr-review-automation.md) — PR 리뷰는 팀장이 GitHub에 자동화; /pr-review 제안 금지
+- [CSharpier format hook](csharpier-format-hook.md) — Edit 도구로 .cs 수정 시 CSharpier 훅이 파일 전체 재포맷 → Bash 편집으로 우회
+- [Python launcher](python-launcher-py.md) — `python`은 Store 스텁(exit 49); `py`를 쓸 것
+- [Portfolio implementation writeup](portfolio-implementation-writeup.md) — 포트폴리오 '구현 방법' 채우기 진행표 위치·순서·규칙
+- [Portfolio fork remote](portfolio-fork-remote.md) — 포트폴리오 문서는 팀 origin 말고 fork remote(jinag8904)로 푸시

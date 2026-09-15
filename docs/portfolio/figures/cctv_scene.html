@@ -1,0 +1,87 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+ body{margin:0;background:#fff;font-family:"Malgun Gothic","Segoe UI",sans-serif}
+ svg{display:block}
+ .b{font-weight:700}
+ .mono{font-family:Consolas,"Malgun Gothic",monospace}
+</style></head><body>
+<svg width="900" height="250" viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <marker id="m" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
+  <marker id="mb" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/></marker>
+  <!-- camera icon -->
+  <symbol id="cam" viewBox="0 0 40 30">
+   <rect x="2" y="8" width="24" height="16" rx="3" fill="currentColor"/>
+   <path d="M26 12 L38 6 L38 26 L26 20 Z" fill="currentColor"/>
+   <circle cx="10" cy="16" r="4" fill="#fff" opacity="0.6"/>
+  </symbol>
+  <!-- monitor icon -->
+  <symbol id="mon" viewBox="0 0 60 44">
+   <rect x="2" y="2" width="56" height="34" rx="4" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+   <rect x="24" y="38" width="12" height="4" fill="#64748b"/>
+  </symbol>
+ </defs>
+
+ <!-- ===== console (left) ===== -->
+ <rect x="20" y="30" width="230" height="200" rx="14" fill="#f4f8ff" stroke="#a9c0ea" stroke-width="1.5"/>
+ <text x="135" y="54" text-anchor="middle" class="b" font-size="13" fill="#1e3a8a">본부 콘솔</text>
+ <use href="#mon" x="60" y="66" width="150" height="110"/>
+ <text x="135" y="112" text-anchor="middle" class="mono" font-size="12" fill="#a5f3fc">CH1 · 본부 정문</text>
+ <text x="135" y="130" text-anchor="middle" font-size="10" fill="#94a3b8">RenderTexture</text>
+ <!-- buttons -->
+ <g font-size="11" class="b">
+  <rect x="60" y="186" width="42" height="26" rx="6" fill="#fff" stroke="#1d4ed8"/><text x="81" y="203" text-anchor="middle" fill="#1d4ed8">◀</text>
+  <rect x="108" y="186" width="42" height="26" rx="6" fill="#fff" stroke="#1d4ed8"/><text x="129" y="203" text-anchor="middle" fill="#1d4ed8">▶</text>
+  <rect x="156" y="186" width="42" height="26" rx="6" fill="#fff" stroke="#cbd5e1"/><text x="177" y="203" text-anchor="middle" fill="#64748b">⏻</text>
+ </g>
+ 
+
+ <!-- request arrow -->
+ <line x1="250" y1="130" x2="300" y2="130" stroke="#1d4ed8" stroke-width="2" marker-end="url(#mb)"/>
+ <text x="275" y="118" text-anchor="middle" class="mono" font-size="10" fill="#1d4ed8">▶ 누름</text>
+
+ <!-- ===== server (center) ===== -->
+ <rect x="304" y="70" width="220" height="120" rx="14" fill="#e8f0fe" stroke="#a9c0ea" stroke-width="1.5"/>
+ <text x="414" y="94" text-anchor="middle" class="b" font-size="13" fill="#1e3a8a">서버</text>
+ <text x="414" y="114" text-anchor="middle" class="mono" font-size="11" fill="#475569">RequestSwitchRpc(+1)</text>
+ <rect x="320" y="124" width="188" height="52" rx="8" fill="#fff" stroke="#a9c0ea"/>
+ <text x="414" y="144" text-anchor="middle" class="mono" font-size="11" fill="#1e3a8a">NetworkVariable&lt;int&gt; index = 1</text>
+ <text x="414" y="162" text-anchor="middle" class="mono" font-size="11" fill="#1e3a8a">NetworkVariable&lt;bool&gt; powered</text>
+
+ <!-- fan-out -->
+ <g stroke="#1d4ed8" stroke-width="2" fill="none" marker-end="url(#mb)">
+  <path d="M 524 130 L 570 130 L 570 80 L 588 80"/>
+  <path d="M 570 130 L 570 200 L 588 200"/>
+ </g>
+ 
+
+ <!-- ===== peers (right): each renders locally ===== -->
+ <g id="peer1" transform="translate(592,40)">
+  <rect x="0" y="0" width="290" height="80" rx="12" fill="#fff" stroke="#a9c0ea" stroke-width="1.5"/>
+  <text x="12" y="18" class="b" font-size="12" fill="#1e293b">호스트 화면</text>
+  <use href="#cam" x="16" y="30" width="40" height="30" color="#cbd5e1"/>
+  <use href="#cam" x="66" y="30" width="40" height="30" color="#1d4ed8"/>
+  <use href="#cam" x="116" y="30" width="40" height="30" color="#cbd5e1"/>
+  <text x="36" y="72" text-anchor="middle" font-size="10" fill="#94a3b8">0 꺼짐</text>
+  <text x="86" y="72" text-anchor="middle" font-size="10" fill="#1d4ed8" class="b">1 켜짐</text>
+  <text x="136" y="72" text-anchor="middle" font-size="10" fill="#94a3b8">2 꺼짐</text>
+  <line x1="160" y1="45" x2="196" y2="45" stroke="#334155" stroke-width="1.5" marker-end="url(#m)"/>
+  <use href="#mon" x="200" y="24" width="60" height="44"/>
+  <text x="230" y="50" text-anchor="middle" font-size="9" fill="#a5f3fc" class="mono">CH1</text>
+ </g>
+ <g id="peer2" transform="translate(592,160)">
+  <rect x="0" y="0" width="290" height="80" rx="12" fill="#fff" stroke="#a9c0ea" stroke-width="1.5"/>
+  <text x="12" y="18" class="b" font-size="12" fill="#1e293b">클라이언트 화면</text>
+  <use href="#cam" x="16" y="30" width="40" height="30" color="#cbd5e1"/>
+  <use href="#cam" x="66" y="30" width="40" height="30" color="#1d4ed8"/>
+  <use href="#cam" x="116" y="30" width="40" height="30" color="#cbd5e1"/>
+  <text x="36" y="72" text-anchor="middle" font-size="10" fill="#94a3b8">0 꺼짐</text>
+  <text x="86" y="72" text-anchor="middle" font-size="10" fill="#1d4ed8" class="b">1 켜짐</text>
+  <text x="136" y="72" text-anchor="middle" font-size="10" fill="#94a3b8">2 꺼짐</text>
+  <line x1="160" y1="45" x2="196" y2="45" stroke="#334155" stroke-width="1.5" marker-end="url(#m)"/>
+  <use href="#mon" x="200" y="24" width="60" height="44"/>
+  <text x="230" y="50" text-anchor="middle" font-size="9" fill="#a5f3fc" class="mono">CH1</text>
+ </g>
+
+</svg>
+</body></html>

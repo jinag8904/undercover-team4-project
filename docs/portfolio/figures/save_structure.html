@@ -1,0 +1,123 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+ body{margin:0;background:#fff;font-family:"Malgun Gothic","Segoe UI",sans-serif}
+ svg{display:block}
+ .b{font-weight:700}
+ .mono{font-family:Consolas,"Malgun Gothic",monospace}
+ .muted{fill:#64748b;font-size:12px}
+</style></head><body>
+<svg width="1240" height="580" viewBox="0 0 1240 580" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker>
+  <marker id="ag" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0f766e"/></marker>
+  <marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/></marker>
+ </defs>
+
+ <!-- ===== left: 로드 흐름 ===== -->
+ <rect x="30" y="20" width="430" height="540" rx="14" fill="#f0fdf4" stroke="#6ee7b7" stroke-width="1.5"/>
+ <text x="50" y="50" class="b" font-size="16" fill="#065f46">로드 — 이어하기</text>
+ <text x="200" y="50" class="muted">SaveService (static) · 호스트에서만</text>
+
+ <g font-size="13">
+  <rect x="50" y="70" width="390" height="58" rx="10" fill="#fff" stroke="#6ee7b7"/>
+  <text x="65" y="91" class="b" fill="#065f46">① 타이틀 — 세이브 유무 조회</text>
+  <text x="65" y="110" class="mono" font-size="12" fill="#334155">RefreshAsync → Data.Player.LoadAsync("session_progress")</text>
+  <text x="65" y="124" class="muted" font-size="11">JSON → SessionSaveData · 포맷 Version 다르면 무시</text>
+
+  <line x1="245" y1="128" x2="245" y2="142" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="50" y="144" width="390" height="56" rx="10" fill="#fff" stroke="#6ee7b7"/>
+  <text x="65" y="165" class="b" fill="#065f46">② [이어하기] / [새로 시작] — 세션 생성 전에</text>
+  <text x="65" y="184" class="mono" font-size="12" fill="#334155">UseSave() → Pending = 세이브  /  StartFresh() → null</text>
+  <text x="65" y="197" class="muted" font-size="11">새로 시작해도 클라우드는 안 지운다 — 첫 출동 저장이 덮어쓴다</text>
+
+  <line x1="245" y1="200" x2="245" y2="214" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="50" y="216" width="390" height="110" rx="10" fill="#fff" stroke="#0f766e" stroke-width="2"/>
+  <text x="65" y="237" class="b" fill="#065f46">③ 세션 시작 — 상주 홀더가 스폰하며 Pending을 읽는다</text>
+  <g class="mono" font-size="12" fill="#334155">
+   <text x="65" y="258">RoundProgress   ← Pending.Round</text>
+   <text x="65" y="276">TeamFund        ← Pending.TeamFund</text>
+   <text x="65" y="294">MapSelection    ← Pending.MapIndex</text>
+   <text x="65" y="312">ShopPurchases   ← Carried · Installables · ShopSlots</text>
+  </g>
+
+  <line x1="245" y1="326" x2="245" y2="340" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="50" y="342" width="390" height="92" rx="10" fill="#fff" stroke="#0f766e" stroke-width="2"/>
+  <text x="65" y="363" class="b" fill="#065f46">④ 플레이어 스폰 — 개인 지갑 복원</text>
+  <text x="65" y="382" class="mono" font-size="12" fill="#334155">PlayerWallet → TryTakeWalletBalance(PlayerId)</text>
+  <text x="65" y="402" fill="#334155">세이브 안의 <tspan class="b">PlayerId</tspan>로 찾는다 — clientId가 아니다</text>
+  <text x="65" y="420" class="muted" font-size="11">세이브에 없는 사람 = 새로 합류 → 0원 · 한 번만 꺼낸다 (재스폰 대비)</text>
+ </g>
+
+ <text x="50" y="458" class="muted" font-size="11">· 저장·로드 전부 서버(호스트)에서만 — Cloud Save는 계정 단위 저장소라</text>
+ <text x="50" y="474" class="muted" font-size="11">  세이브는 호스트 계정의 것. 다른 사람이 방을 만들면 그 세이브로 이어진다.</text>
+ <text x="50" y="496" class="muted" font-size="11">· 그래서 지갑을 PlayerId로 기록한다 — 누가 방장이든 각자 잔액을 되찾는다.</text>
+ <text x="50" y="518" class="muted" font-size="11">· 조회·저장·삭제 실패는 경고만 — 게임 흐름을 막지 않는다.</text>
+ <text x="50" y="534" class="muted" font-size="11">  (세이브가 없으면 새 판일 뿐이다)</text>
+
+ <!-- ===== right top: 저장 시점 ===== -->
+ <rect x="490" y="20" width="720" height="250" rx="14" fill="#fff" stroke="#0f766e" stroke-width="2"/>
+ <text x="510" y="50" class="b" font-size="16" fill="#065f46">저장 — 씬을 넘는 길목마다</text>
+ <text x="740" y="50" class="muted">SaveAsync · Capture()로 즉시 스냅샷 → Cloud Save에 덮어쓰기</text>
+
+ <g font-size="12">
+  <rect x="510" y="70" width="210" height="72" rx="10" fill="#ecfdf5" stroke="#6ee7b7"/>
+  <text x="522" y="90" class="b" fill="#065f46">① 라운드 성공 → 상점</text>
+  <text x="522" y="108" class="muted" font-size="11">RoundEndResetter</text>
+  <text x="522" y="128" class="muted" font-size="11">정산까지 반영된 상태</text>
+
+  <rect x="740" y="70" width="210" height="72" rx="10" fill="#ecfdf5" stroke="#6ee7b7"/>
+  <text x="752" y="90" class="b" fill="#065f46">② 상점 구매 · 출동 → 게임</text>
+  <text x="752" y="108" class="muted" font-size="11">ShopLineup · ShopManager.Dispatch</text>
+  <text x="752" y="128" class="muted" font-size="11">쓴 돈·산 물건이 반영된 상태</text>
+
+  <rect x="970" y="70" width="220" height="72" rx="10" fill="#fef2f2" stroke="#fca5a5"/>
+  <text x="982" y="90" class="b" fill="#991b1b">라운드 실패 → 삭제</text>
+  <text x="982" y="108" class="mono" font-size="11" fill="#334155">DeleteAsync</text>
+  <text x="982" y="128" class="muted" font-size="11">판이 끝났으니 이어할 것이 없다</text>
+ </g>
+
+ <text x="510" y="170" class="b" font-size="12" fill="#1e293b">②가 없으면</text>
+ <text x="600" y="170" class="muted">상점에서 장비를 다 사고 라운드 중에 끊겼을 때 그 구매가 통째로 사라진다</text>
+
+ <line x1="510" y1="186" x2="1190" y2="186" stroke="#e2e8f0"/>
+ <text x="510" y="208" class="b" font-size="12" fill="#1e293b">연달아 불려도 안전</text>
+ <text x="510" y="226" class="muted" font-size="11">· 상태는 await 이전에 스냅샷 — 씬 전환 직전에 Forget()으로 던져도 값이 흔들리지 않는다</text>
+ <text x="510" y="242" class="muted" font-size="11">· 쓰는 중에 또 오면 대기표 하나로 합쳐 끝난 뒤 최신 상태를 한 번 더 쓴다 (#925 · 겹친 쓰기의 완료 순서 다툼 방지)</text>
+
+ <!-- ===== right bottom: 지갑 병합 ===== -->
+ <rect x="490" y="290" width="720" height="270" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+ <text x="510" y="320" class="b" font-size="16" fill="#1e293b">지갑 병합 — 잠깐 빠진 사람의 돈이 사라지지 않게</text>
+ <text x="900" y="320" class="muted">CapturePlayers()</text>
+
+ <g font-size="12">
+  <rect x="510" y="340" width="200" height="80" rx="10" fill="#fff" stroke="#cbd5e1"/>
+  <text x="522" y="360" class="b" fill="#334155">마지막으로 알던 세이브</text>
+  <text x="522" y="378" class="mono" font-size="11" fill="#334155">s_known.Players</text>
+  <text x="522" y="396" class="muted" font-size="11">A: 1200 · B: 800 · C: 500</text>
+  <text x="522" y="412" class="muted" font-size="11">(지난 저장 시점)</text>
+
+  <rect x="510" y="432" width="200" height="80" rx="10" fill="#fff" stroke="#cbd5e1"/>
+  <text x="522" y="452" class="b" fill="#334155">지금 접속 중인 지갑</text>
+  <text x="522" y="470" class="mono" font-size="11" fill="#334155">ConnectedClients → PlayerWallet</text>
+  <text x="522" y="488" class="muted" font-size="11">A: 1500 · B: 300</text>
+  <text x="522" y="504" class="muted" font-size="11">(C는 지금 없음)</text>
+
+  <path d="M 712 380 L 760 380 L 760 426" fill="none" stroke="#0f766e" stroke-width="1.5"/>
+  <path d="M 712 472 L 760 472 L 760 426 L 790 426" fill="none" stroke="#0f766e" stroke-width="1.5" marker-end="url(#ag)"/>
+
+  <rect x="795" y="386" width="180" height="80" rx="10" fill="#ecfdf5" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="807" y="406" class="b" fill="#065f46">PlayerId로 병합</text>
+  <text x="807" y="424" class="muted" font-size="11">접속 중 → 지금 값으로 덮고</text>
+  <text x="807" y="440" class="muted" font-size="11">없는 사람 → 마지막 값 유지</text>
+
+  <line x1="977" y1="426" x2="1007" y2="426" stroke="#0f766e" stroke-width="1.5" marker-end="url(#ag)"/>
+  <rect x="1010" y="386" width="180" height="80" rx="10" fill="#fff" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="1022" y="406" class="b" fill="#065f46">이번 저장</text>
+  <text x="1022" y="426" class="mono" font-size="11" fill="#334155">A: 1500 · B: 300</text>
+  <text x="1022" y="444" class="mono" font-size="11" fill="#334155">C: 500 ← 유지</text>
+ </g>
+ <text x="795" y="500" class="muted" font-size="11">PlayerId는 오너가 서버에 보고해야 안다 — 아직 안 온 지갑은</text>
+ <text x="795" y="516" class="muted" font-size="11">이번 저장에서 건너뛴다 (마지막 값이 이미 들어가 있어 사라지진 않는다)</text>
+ <text x="795" y="540" class="muted" font-size="11">방금 쓴 값이 곧 다음 s_known — 다음 저장의 병합 출처가 된다</text>
+</svg>
+</body></html>
