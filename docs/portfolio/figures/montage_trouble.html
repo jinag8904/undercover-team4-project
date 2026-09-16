@@ -15,7 +15,7 @@
 <div class="row" id="row"></div>
 <script>
 const P='montage_assets/';
-const files={base:'Montage_Base.png',hair:'Montage_HairStyle_7.png',hairUnknown:'Montage_HairUnknown.png',beard:'Montage_FacialHair_1.png',hat:'Montage_Headwear_2.png',glass:'Montage_Eyewear_1.png'};
+const files={base:'Montage_Base.png',hair:'Montage_HairStyle_7.png',hairUnknown:'Montage_HairUnknown.png',beard:'Montage_FacialHair_1.png',hat:'Montage_Headwear_2.png',hatUnknown:'Montage_HatUnknown.png'};
 const hairColor='rgb(116,76,56)', unknownTint='rgba(184,184,189,0.35)';
 function load(src){return new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.src=P+src;});}
 function tinted(img,color){const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d');x.drawImage(img,0,0,128,128);if(color){x.globalCompositeOperation='source-in';x.fillStyle=color;x.fillRect(0,0,128,128);}return c;}
@@ -25,21 +25,21 @@ function step(content,n,p,cur){const d=el('div','step'+(cur?' cur':''));const im
 function arrow(){const d=el('div','arrow');d.innerHTML='<svg width="36" height="20"><path d="M0 10 H26" stroke="#334155" stroke-width="2"/><path d="M24 3 L34 10 L24 17 z" fill="#334155"/></svg>';return d;}
 (async()=>{
  const im={};for(const k in files)im[k]=await load(files[k]);
- const L={base:tinted(im.base,null),hair:tinted(im.hair,hairColor),hairU:tinted(im.hairUnknown,'rgb(160,160,166)'),beard:tinted(im.beard,null),hat:tinted(im.hat,null),glass:tinted(im.glass,null)};
+ const L={base:tinted(im.base,null),hair:tinted(im.hair,hairColor),hairU:tinted(im.hairUnknown,'rgb(160,160,166)'),beard:tinted(im.beard,null),hat:tinted(im.hat,null)};
  const r=document.getElementById('row');
  // ① text
- const t=el('div','txt');t.innerHTML='머리 스타일: 단발<br>머리색: 갈색<br>수염: 미상<br>모자: 빨간 캡<br>안경: 미상';
+ const t=el('div','txt');t.innerHTML='<b style="color:#fbbf24">머리 스타일: 미상</b><br>수염: 콧수염<br>모자: 없음<br>안경: 없음';
  r.appendChild(step(t,'① 글로 표현','읽어야 안다 —|한눈에 대조가 안 됨',false));
  r.appendChild(arrow());
  // ② portrait, revealed only
- r.appendChild(step(compose([L.base,L.hair,L.hat]),'② 초상화','미공개 축을 안 그리니|안 썼다와 모른다가 같아 보임',false));
+ r.appendChild(step(compose([L.base,L.beard]),'② 초상화','머리를 안 그리니|대머리와 모른다가 같아 보임',false));
  r.appendChild(arrow());
  // ③ unknown drawn
- const u=compose([L.base,L.hairU,L.beard]);
- r.appendChild(step(u,'③ 미상을 그림으로','모르는 머리는 점선·회색 —|처음 보면 뜻을 못 알아봄',false));
+ const u=compose([L.base,L.beard,L.hairU]);
+ r.appendChild(step(u,'③ 미상을 그림으로','모르는 머리는 점선 —|처음 보면 뜻을 못 알아봄',false));
  r.appendChild(arrow());
  // ④ all revealed
- r.appendChild(step(compose([L.base,L.hair,L.beard,L.hat,L.glass]),'④ 공개 축 수를 최대로','미상이 아예 안 생김 —|그림과 닮은 사람만 찾으면 끝',true));
+ r.appendChild(step(compose([L.base,L.hair,L.beard]),'④ 공개 축 수를 최대로','미상이 아예 안 생김 —|그림과 닮은 사람만 찾으면 끝',true));
  document.querySelectorAll('.p').forEach(e=>e.innerHTML=e.textContent.replace('|','<br>'));
 })();
 </script>
